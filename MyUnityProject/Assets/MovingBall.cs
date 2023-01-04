@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MovingBall : MonoBehaviour
@@ -7,9 +8,9 @@ public class MovingBall : MonoBehaviour
     [SerializeField]
     MovingTarget _target;
     IK_tentacles _myOctopus;
+
     public SliderController _strengthSlider;
 
-    //movement speed in units per second
     [Range(-1.0f, 1.0f)]
     [SerializeField]
     private float _movementSpeed = 5f;
@@ -18,6 +19,7 @@ public class MovingBall : MonoBehaviour
 
     private void Awake()
     {
+        _myOctopus = FindObjectOfType<IK_tentacles>();
         _target = GameObject.Find("BlueTarget").GetComponent<MovingTarget>();
     }
 
@@ -29,8 +31,11 @@ public class MovingBall : MonoBehaviour
     void Update()
     {
         transform.rotation = Quaternion.identity;
-
-        transform.position = transform.position + new Vector3(-transform.position.x * _movementSpeed * Time.deltaTime, transform.position.y * _movementSpeed * Time.deltaTime, 0);
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Respawn();
+        }
+        //transform.position = transform.position + new Vector3(-transform.position.x * _movementSpeed * Time.deltaTime, transform.position.y * _movementSpeed * Time.deltaTime, 0);
 
     }
     void Shoot()
@@ -51,5 +56,10 @@ public class MovingBall : MonoBehaviour
             _myOctopus.NotifyShoot();
             _strengthSlider.canShoot = false;
         }
+    }
+
+    public void Respawn()
+    {
+        transform.position = new Vector3(-125, 22, -39);
     }
 }

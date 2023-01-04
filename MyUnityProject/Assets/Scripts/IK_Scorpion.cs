@@ -26,7 +26,6 @@ public class IK_Scorpion : MonoBehaviour
     public Transform[] legTargets;
     public Transform[] futureLegBases;
 
-    // Start is called before the first frame update
     void Start()
     {
         _myController.InitLegs(legs,futureLegBases,legTargets);
@@ -34,7 +33,6 @@ public class IK_Scorpion : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(animPlaying)

@@ -14,6 +14,8 @@ public class IK_tentacles : MonoBehaviour
     [SerializeField]
     Transform[] _randomTargets;
 
+    private float maxShoots = 2;
+    private float _currentShoots = 0;
 
     MyOctopusController _myController = new MyOctopusController();
     
@@ -35,13 +37,8 @@ public class IK_tentacles : MonoBehaviour
     [SerializeField]
     bool _updateTwistSwingLimits = false;
 
-
-
-
     [SerializeField]
     float TwistMin{set{ _myController.TwistMin = value; }}
-
-
 
     #region public methods
 
@@ -54,12 +51,19 @@ public class IK_tentacles : MonoBehaviour
 
     public void NotifyShoot()
     {
-        _myController.NotifyShoot();
+        if(_currentShoots < maxShoots)
+        {
+            _myController.NotifyShoot();
+            _currentShoots++;
+        }
+        else
+        {
+            Debug.Log("Octopus couldn't stop the ball");
+            _currentShoots = 0;
+        }
     }
 
-
     #endregion
-
 
     void Start()
     {
@@ -73,8 +77,6 @@ public class IK_tentacles : MonoBehaviour
         _myController.SwingMin = _swingMin;
 
     }
-
-
 
     void Update()
     {
