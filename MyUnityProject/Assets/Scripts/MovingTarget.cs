@@ -18,7 +18,7 @@ public class MovingTarget: MonoBehaviour
     //movement speed in units per second
     [Range(-1.0f,1.0f)]
     [SerializeField]
-    private float _movementSpeed = 5f;
+    private float _movementSpeed = 10f;
 
 
     [SerializeField]
@@ -27,13 +27,7 @@ public class MovingTarget: MonoBehaviour
 
     Vector3 _dir;
 
-   
-    
 
-    //variable added just to control whether we are 
-   
-
-    // Start is called before the first frame update
     void Start()
     {
         if (_mode == MovingMode.RANDOM) {
@@ -49,9 +43,6 @@ public class MovingTarget: MonoBehaviour
                 float a = Random.Range(0.0f,1.0f);
                 _dir = new Vector3(a, 1 - a, 0);
             }
-
-
-
         }
     }
 
@@ -63,15 +54,10 @@ public class MovingTarget: MonoBehaviour
 
         if (_mode == MovingMode.USERTARGET)
         {
-            //get the Input from Horizontal axis
             float horizontalInput = Input.GetAxis("Horizontal");
-            //get the Input from Vertical axis
             float verticalInput = Input.GetAxis("Vertical");
 
-            //update the position
-            transform.position = transform.position + new Vector3(-horizontalInput * _movementSpeed * Time.deltaTime, verticalInput * _movementSpeed * Time.deltaTime, 0);
-
-       
+            transform.position = transform.position + new Vector3(-horizontalInput * _movementSpeed * Time.deltaTime, verticalInput * _movementSpeed * Time.deltaTime, 0);       
         }
         else if (_mode == MovingMode.RANDOM) {
 
@@ -87,11 +73,18 @@ public class MovingTarget: MonoBehaviour
           //  StartCoroutine(ChangeDir());
 
         } 
-
-
-
-
     }
+
+    public float GetPosX()
+    {
+        return transform.position.x;
+    }   
+    public float GetPosY()
+    {
+        return transform.position.y;
+    }
+
+
 
     //IEnumerator ChangeDir()
     //{
@@ -119,7 +112,6 @@ public class MovingTarget: MonoBehaviour
         if(_mode == MovingMode.USERTARGET)
             _myOctopus.NotifyTarget(transform, collision.collider.transform);
 
-        //Debug.Log("I am object " + name + "  and i enter collision with " + collision.collider.name);
     }
 
 
@@ -129,11 +121,8 @@ public class MovingTarget: MonoBehaviour
             _myOctopus.NotifyTarget(transform, collision.collider.transform);
         else if(_mode == MovingMode.RANDOM)
         {
-            
-
 
         }
-        //Debug.Log("I am object " + name + "  and i stay colliding with " + collision.collider.name);
     }
     //private void OnCollisionExit(Collision collision)
     //{

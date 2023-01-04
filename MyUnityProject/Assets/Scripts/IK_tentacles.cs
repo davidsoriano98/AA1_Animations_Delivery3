@@ -61,7 +61,6 @@ public class IK_tentacles : MonoBehaviour
     #endregion
 
 
-    // Start is called before the first frame update
     void Start()
     {
         
@@ -77,7 +76,6 @@ public class IK_tentacles : MonoBehaviour
 
 
 
-    // Update is called once per frame
     void Update()
     {
         _myController.UpdateTentacles();

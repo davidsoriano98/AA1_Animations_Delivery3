@@ -5,24 +5,55 @@ using UnityEngine.UI;
 
 public class SliderController : MonoBehaviour
 {
-    [SerializeField] private Slider _slider;
 
-    // Start is called before the first frame update
+    [SerializeField] private Slider _slider;
+    private bool sign = true;
+    public bool canShoot = false;
+    public float strenghtForce = 0;
+
+    private void Awake()
+    {
+        _slider = GetComponent<Slider>();
+    }
+
     void Start()
     {
         _slider.value = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("z"))
+        if (Input.GetKey(KeyCode.Z))
         {
-            _slider.value -= 100;
+            if(sign)
+            {
+                AddToSlider(+1f);
+            }
+            else
+            {
+                AddToSlider(-1f);
+            }
+            if(_slider.value == 0)
+            {
+                sign = true;
+            }
+            if(_slider.value == 100)
+            {
+                sign = false;
+            }
         }
-        else if (Input.GetKeyDown("x")) 
+
+        if(Input.GetKeyUp(KeyCode.Z))
         {
-            _slider.value += 100; 
+            //shoot
+            canShoot = true;
+            strenghtForce = _slider.value;
         }
+
+    }
+
+    void AddToSlider(float val)
+    {
+        _slider.value += val;
     }
 }

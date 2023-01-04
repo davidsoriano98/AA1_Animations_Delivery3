@@ -5,7 +5,9 @@ using UnityEngine;
 public class MovingBall : MonoBehaviour
 {
     [SerializeField]
+    MovingTarget _target;
     IK_tentacles _myOctopus;
+    public SliderController _strengthSlider;
 
     //movement speed in units per second
     [Range(-1.0f, 1.0f)]
@@ -14,29 +16,40 @@ public class MovingBall : MonoBehaviour
 
     Vector3 _dir;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        _target = GameObject.Find("BlueTarget").GetComponent<MovingTarget>();
+    }
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.rotation = Quaternion.identity;
 
-        //get the Input from Horizontal axis
-        float horizontalInput = Input.GetAxis("Horizontal");
-        //get the Input from Vertical axis
-        float verticalInput = Input.GetAxis("Vertical");
+        transform.position = transform.position + new Vector3(-transform.position.x * _movementSpeed * Time.deltaTime, transform.position.y * _movementSpeed * Time.deltaTime, 0);
 
-        //update the position
-        transform.position = transform.position + new Vector3(-horizontalInput * _movementSpeed * Time.deltaTime, verticalInput * _movementSpeed * Time.deltaTime, 0);
+    }
+    void Shoot()
+    {
+        // Apply force to ball for shoot
+    }
 
+    //DIRECTION TO SHOOT
+    Vector3 GetPos()
+    {
+        return new Vector3(_target.GetPosX(), _target.GetPosY(), transform.position.z);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        _myOctopus.NotifyShoot();
+        if(_strengthSlider.canShoot)
+        {
+            _myOctopus.NotifyShoot();
+            _strengthSlider.canShoot = false;
+        }
     }
 }
