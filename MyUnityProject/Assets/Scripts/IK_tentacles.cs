@@ -53,12 +53,12 @@ public class IK_tentacles : MonoBehaviour
     {
         if(_currentShoots < maxShoots)
         {
-            _myController.NotifyShoot();
+            Debug.Log("Octopus couldn't stop the ball");
             _currentShoots++;
         }
         else
         {
-            Debug.Log("Octopus couldn't stop the ball");
+            _myController.NotifyShoot();
             _currentShoots = 0;
         }
     }

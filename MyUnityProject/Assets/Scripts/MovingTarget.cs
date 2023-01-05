@@ -75,14 +75,11 @@ public class MovingTarget: MonoBehaviour
         } 
     }
 
-    public float GetPosX()
+    public Vector3 GetPosition()
     {
-        return transform.position.x;
+        return transform.position;
     }   
-    public float GetPosY()
-    {
-        return transform.position.y;
-    }
+
 
 
 

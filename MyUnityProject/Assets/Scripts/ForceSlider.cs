@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SliderController : MonoBehaviour
+public class ForceSlider : MonoBehaviour
 {
 
     [SerializeField] private Slider _slider;
@@ -11,9 +11,12 @@ public class SliderController : MonoBehaviour
     public bool canShoot = false;
     public float strenghtForce = 0;
 
+    IK_Scorpion _scorp;
+
     private void Awake()
     {
         _slider = GetComponent<Slider>();
+        _scorp = FindObjectOfType<IK_Scorpion>();
     }
 
     void Start()
@@ -23,9 +26,9 @@ public class SliderController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Z))
+        if (Input.GetKey(KeyCode.Space))
         {
-            if(sign)
+            if (sign)
             {
                 AddToSlider(+1f);
             }
@@ -33,19 +36,19 @@ public class SliderController : MonoBehaviour
             {
                 AddToSlider(-1f);
             }
-            if(_slider.value == 0)
+            if (_slider.value == 0)
             {
                 sign = true;
             }
-            if(_slider.value == 100)
+            if (_slider.value == 100)
             {
                 sign = false;
             }
         }
 
-        if(Input.GetKeyUp(KeyCode.Z))
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            //shoot
+            _scorp.SetPointTarget();
             canShoot = true;
             strenghtForce = _slider.value;
         }

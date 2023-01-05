@@ -26,11 +26,16 @@ public class IK_Scorpion : MonoBehaviour
     public Transform[] legTargets;
     public Transform[] futureLegBases;
 
+    public bool isShooting = false;
+    public GameObject prefab;
+    public MovingBall _ball;
+
+    GameObject pointTarget;
     void Start()
     {
         _myController.InitLegs(legs,futureLegBases,legTargets);
         _myController.InitTail(tail);
-
+        pointTarget = Instantiate(prefab, tailTarget.position, Quaternion.identity);
     }
 
     void Update()
@@ -38,13 +43,9 @@ public class IK_Scorpion : MonoBehaviour
         if(animPlaying)
             animTime += Time.deltaTime;
 
-        NotifyTailTarget();
-        
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            NotifyStartWalk();
-            animTime = 0;
-            animPlaying = true;
+            Respawn();
         }
 
         if (animTime < animDuration)
@@ -57,19 +58,48 @@ public class IK_Scorpion : MonoBehaviour
             animPlaying = false;
         }
 
-        _myController.UpdateIK();
+        if(isShooting)
+        {
+            _myController.UpdateIKTail();
+        }
+
+        _myController.UpdateIKLegs();
     }
     
-    //Function to send the tail target transform to the dll
     public void NotifyTailTarget()
     {
-        _myController.NotifyTailTarget(tailTarget);
+        _myController.NotifyTailTarget(pointTarget.transform);
+        //_myController.NotifyTailTarget();
     }
 
     //Trigger Function to start the walk animation
     public void NotifyStartWalk()
     {
-
         _myController.NotifyStartWalk();
+    }
+
+    public void ShootTail()
+    {
+        NotifyTailTarget();
+        isShooting = true;
+    }
+
+    public void SetPointTarget()
+    {
+        pointTarget.transform.position += (Random.insideUnitSphere * 0.35f);
+    }
+
+    public void ResetPointTarget()
+    {
+        pointTarget.transform.position = tailTarget.position;
+    }
+
+    public void Respawn()
+    {
+        isShooting = false;
+        _myController.NotifyTailTarget(null);
+        NotifyStartWalk();
+        animTime = 0;
+        animPlaying = true;
     }
 }
