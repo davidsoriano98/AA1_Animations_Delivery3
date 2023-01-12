@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using OctopusController;
+using UnityEditor.PackageManager;
+using TMPro;
 
 public class IK_Scorpion : MonoBehaviour
 {
@@ -30,7 +32,15 @@ public class IK_Scorpion : MonoBehaviour
     public GameObject prefab;
     public MovingBall _ball;
 
+    public GameObject _pointToRay;
+
     GameObject pointTarget;
+
+    GameObject _lastGOHit;
+
+    public Transform newBody;
+    float dist;
+
     void Start()
     {
         _myController.InitLegs(legs,futureLegBases,legTargets);
@@ -63,9 +73,47 @@ public class IK_Scorpion : MonoBehaviour
             _myController.UpdateIKTail();
         }
 
+        RaycastHit hit;
+
+        if (Physics.Raycast(Body.position, -Vector3.up, out hit))
+        {
+            foreach (Transform legBase in futureLegBases)
+            {
+                legBase.transform.position = new Vector3(legBase.transform.position.x, hit.point.y, legBase.transform.position.z);
+            }
+
+            if (_lastGOHit == null)
+            {
+                _lastGOHit = hit.transform.gameObject;
+                dist = newBody.position.y - futureLegBases[0].position.y;
+                dist = (float)System.Math.Round(dist, 3);
+            }
+            if (_lastGOHit != hit.transform.gameObject)
+            {
+                float currentDistance = (float)System.Math.Round(newBody.position.y - futureLegBases[0].position.y, 2);
+                currentDistance = (float)System.Math.Round(currentDistance, 3);
+
+                if (dist < currentDistance)
+                {
+                    float temp = Mathf.Abs(dist) - Mathf.Abs(currentDistance);
+                    newBody.position = new Vector3(newBody.position.x, newBody.position.y + temp, newBody.position.z);
+                }
+                else if (dist > currentDistance)
+                {
+                    float temp =  Mathf.Abs(dist) - Mathf.Abs(currentDistance);
+
+                    newBody.position = new Vector3(newBody.position.x, newBody.position.y + temp, newBody.position.z);
+
+                }
+                _lastGOHit = hit.transform.gameObject;
+            }
+        }
+
         _myController.UpdateIKLegs();
     }
     
+
+
     public void NotifyTailTarget()
     {
         _myController.NotifyTailTarget(pointTarget.transform);
