@@ -71,6 +71,7 @@ public class IK_Scorpion : MonoBehaviour
             _myController.UpdateIKTail();
         }
 
+        //Exercice 3
         RaycastHit hit;
         if (Physics.Raycast(Body.position, -Vector3.up, out hit))
         {
@@ -81,10 +82,12 @@ public class IK_Scorpion : MonoBehaviour
             }
             if (_lastGOHit != hit.transform.gameObject)
             {
+                //Ex 3.1
                 foreach (Transform legBase in futureLegBases)
                 {
                     legBase.transform.position = new Vector3(legBase.transform.position.x, hit.point.y, legBase.transform.position.z);
                 }
+                //Ex 3.4
                 currentDist = GetValueRounded(newBody.position.y - futureLegBases[0].position.y);
                 float temp = Mathf.Abs(dist) - Mathf.Abs(currentDist);
                 newBody.position = new Vector3(newBody.position.x, newBody.position.y + temp, newBody.position.z);

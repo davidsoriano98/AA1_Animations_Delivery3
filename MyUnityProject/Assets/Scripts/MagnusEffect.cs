@@ -25,7 +25,6 @@ public class MagnusEffect : MonoBehaviour
                 float planeVel = new Vector3(mp.RigidBody.velocity.x, 0, mp.RigidBody.velocity.z).magnitude;
                 float forceM = (mp.Drag * areaDensity * mp.CrossSection * Mathf.Pow(planeVel, 2f)) / 2;
                 mp.RigidBody.AddForce(Vector3.left * forceM);
-                //mp.RigidBody.AddForce(Vector3.up * forceM);
             }
         }
     }
