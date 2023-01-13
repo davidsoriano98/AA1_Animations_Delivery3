@@ -18,8 +18,6 @@ public class IK_tentacles : MonoBehaviour
     private float _currentShoots = 0;
 
     MyOctopusController _myController = new MyOctopusController();
-    
-
 
     [Header("Exercise 3")]
     [SerializeField, Range(0, 360)]

@@ -30,17 +30,17 @@ public class ForceSlider : MonoBehaviour
         {
             if (sign)
             {
-                AddToSlider(+1f);
+                AddToSlider(+0.005f);
             }
             else
             {
-                AddToSlider(-1f);
+                AddToSlider(-0.005f);
             }
-            if (_slider.value == 0)
+            if (_slider.value == 0.15f)
             {
                 sign = true;
             }
-            if (_slider.value == 100)
+            if (_slider.value == 0.25f)
             {
                 sign = false;
             }

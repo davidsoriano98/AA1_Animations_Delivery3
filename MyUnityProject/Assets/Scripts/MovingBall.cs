@@ -17,13 +17,10 @@ public class MovingBall : MonoBehaviour
     [Range(-1.0f, 1.0f)]
     [SerializeField]
     private float _movementSpeed = 5f;
-
     private Rigidbody _rb;
 
     public float radius;
     public float forceToBeAplied;
-
-    Vector3 _dir;
 
     private void Awake()
     {
@@ -36,8 +33,11 @@ public class MovingBall : MonoBehaviour
 
     void Update()
     {
-        //Debug.DrawRay(transform.position, transform.TransformDirection(GetDirectionNormalized()), Color.white);
+        forceToBeAplied = _strengthSlider.strenghtForce;
+        //Debug.DrawRay(transform.position, transform.TransformDirection(_target.GetPosition() - transform.position), Color.white);
+
         transform.rotation = Quaternion.identity;
+
         if (Input.GetKeyDown(KeyCode.L))
         {
             Respawn();
@@ -47,8 +47,6 @@ public class MovingBall : MonoBehaviour
         {
             _myScorpion.ShootTail();
         }
-        //transform.position = transform.position + new Vector3(-transform.position.x * _movementSpeed * Time.deltaTime, transform.position.y * _movementSpeed * Time.deltaTime, 0);
-
     }
     void ShootAction()
     {

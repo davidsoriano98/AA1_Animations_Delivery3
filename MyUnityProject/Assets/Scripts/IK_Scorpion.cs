@@ -92,7 +92,7 @@ public class IK_Scorpion : MonoBehaviour
             }
         }
 
-        _myController.UpdateIKLegs(1);
+        _myController.UpdateIKLegs();
     }
     
     private float GetValueRounded(float val)
