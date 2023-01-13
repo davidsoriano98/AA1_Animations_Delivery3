@@ -2,6 +2,11 @@
 # Nahuel Aparicio // nahuel.aparicio@enti.cat
 # David Soriano // david.soriano@enti.cat
 
+Start / Respawn -> L
+Move target (where you aim) -> WASD
+Shoot -> hold space on key up -> near ball = shoot
+Predict trayectory -> press i
+
 Exercice 1
 
 1.1 -> script "IK_tentacles" function NotifyShoot()

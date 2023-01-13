@@ -51,11 +51,6 @@ public class IK_Scorpion : MonoBehaviour
         if(animPlaying)
             animTime += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Respawn();
-        }
-
         if (animTime < animDuration)
         {
             Body.position = Vector3.Lerp(StartPos.position, EndPos.position, animTime / animDuration);

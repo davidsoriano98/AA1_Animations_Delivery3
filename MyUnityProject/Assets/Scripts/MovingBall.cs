@@ -26,8 +26,6 @@ public class MovingBall : MonoBehaviour
     public Text _rotationText;
 
     public Trajectory _trajectory;
-
-
     private void Awake()
     {
         _magPhysics = GetComponent<MagnusPhysics>();
@@ -49,7 +47,7 @@ public class MovingBall : MonoBehaviour
             Respawn();
         }
 
-        if(_strengthSlider.canShoot && Input.GetKeyDown(KeyCode.M))
+        if(_strengthSlider.canShoot && Input.GetKeyUp(KeyCode.Space))
         {
             _myScorpion.ShootTail();
         }
@@ -62,7 +60,7 @@ public class MovingBall : MonoBehaviour
                 float pV = new Vector3(GetDirectionNormalized().x * forceToBeAplied, 0, GetDirectionNormalized().z * forceToBeAplied).magnitude;
                 float fM = (_magPhysics.Drag * _effectSlider.value * _magPhysics.CrossSection * Mathf.Pow(pV, 2f)) / 2;
                 _trajectory.Actived = true; //forceM * Vector3.left
-                _trajectory.SimulatePath(gameObject, GetDirectionNormalized() * forceToBeAplied, _rb.mass, _magPhysics.Drag, fM, 3f, Time.fixedDeltaTime);
+                _trajectory.SimulatePath(gameObject, GetDirectionNormalized() * forceToBeAplied, _rb.mass, _magPhysics.Drag, fM);
 
             }
 
@@ -71,12 +69,6 @@ public class MovingBall : MonoBehaviour
             float planeVel = new Vector3(_magPhysics.RigidBody.velocity.x, 0, _magPhysics.RigidBody.velocity.z).magnitude;
             float forceM = (_magPhysics.Drag * _effectSlider.value * _magPhysics.CrossSection * Mathf.Pow(planeVel, 2f)) / 2;
             _magPhysics.RigidBody.AddForce(Vector3.left * forceM);
-
-
-            //_trajectory.Actived = true;
-
-
-            //Calc final point
         }
         else
         { // No magnus effect show
