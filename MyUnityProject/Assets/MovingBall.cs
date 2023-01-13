@@ -21,6 +21,7 @@ public class MovingBall : MonoBehaviour
     private Rigidbody _rb;
 
     public float radius;
+    public float forceToBeAplied;
 
     Vector3 _dir;
 
@@ -35,14 +36,14 @@ public class MovingBall : MonoBehaviour
 
     void Update()
     {
-        Debug.DrawRay(transform.position, transform.TransformDirection(GetDirection()), Color.white);
+        //Debug.DrawRay(transform.position, transform.TransformDirection(GetDirectionNormalized()), Color.white);
         transform.rotation = Quaternion.identity;
         if (Input.GetKeyDown(KeyCode.L))
         {
             Respawn();
         }
 
-        if(_strengthSlider.canShoot && _effectSlider.GetEffectValue() < 50f)
+        if(_strengthSlider.canShoot && Input.GetKeyDown(KeyCode.M))
         {
             _myScorpion.ShootTail();
         }
@@ -51,28 +52,27 @@ public class MovingBall : MonoBehaviour
     }
     void ShootAction()
     {
-        _rb.AddForce(GetDirection(), ForceMode.Impulse);
+        _rb.AddForce(GetDirectionNormalized() * forceToBeAplied, ForceMode.Impulse);
         _myOctopus.NotifyShoot();
         _strengthSlider.canShoot = false;
     }
 
     //DIRECTION TO SHOOT
-    Vector3 GetDirection()
+    Vector3 GetDirectionNormalized()
     {
-        return _target.GetPosition() - transform.position;
+        return (_target.GetPosition() - transform.position).normalized;
     }
 
-    private void CalculateMagnus()
-    {
+    //private void CalculateMagnus()
+    //{
+    //    var direction = Vector3.Cross(_rb.angularVelocity, _rb.velocity);
+    //    var magnitude = 4 / 3f * Mathf.PI * airDensity * Mathf.Pow(radius, 3);
+    //    _rb.AddForce(magnitude * direction, ForceMode.Impulse);
+    //}
 
-        //var direction = Vector3.Cross(rb.angularVelocity, rb.velocity);
-        //var magnitude = 4 / 3f * Mathf.PI * airDensity * Mathf.Pow(radius, 3);
-        //rb.AddForce(magnitude * direction);
-    }
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(_strengthSlider.canShoot)
+        if (_strengthSlider.canShoot)
         {
             ShootAction();
         }

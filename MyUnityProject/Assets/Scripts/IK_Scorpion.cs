@@ -92,8 +92,6 @@ public class IK_Scorpion : MonoBehaviour
             }
         }
 
-
-
         _myController.UpdateIKLegs(1);
     }
     

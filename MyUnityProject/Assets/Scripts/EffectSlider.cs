@@ -9,18 +9,18 @@ public class EffectSlider : MonoBehaviour
     private void Awake()
     {
         _slider = GetComponent<Slider>();
-        _slider.value = 50;
+        _slider.value = 0;
     }
 
     void Update()
     {
         if(Input.GetKey(KeyCode.Z))
         {
-            _slider.value -= 2;
+            _slider.value -= 0.1f;
         }
         if(Input.GetKey(KeyCode.X))
         {
-            _slider.value += 2;
+            _slider.value += 0.1f;
         }
 
     }
