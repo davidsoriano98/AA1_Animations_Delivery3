@@ -14,7 +14,7 @@ public class IK_Scorpion : MonoBehaviour
     [Header("Body")]
     float animTime;
     public float animDuration = 5;
-    bool animPlaying = false;
+    public bool animPlaying = false;
     public Transform Body;
     public Transform StartPos;
     public Transform EndPos;
